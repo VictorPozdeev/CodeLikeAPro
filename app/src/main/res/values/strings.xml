@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">NMedia</string>
     <string name="hello">NMedia!</string>
+    <string name="description_post_author_avatar" translatable="false" />
+    <string name="author_title">Netology. University of Internet Professions</string>
+    <string name="author_title_date">November 4 at 18:36</string>
+    <string name="description_button_menu" translatable="false">Menu</string>
+    <string name="text_content">💡 If you were the best at solving puzzles with an asterisk as a child,
+        won a speed reading contest, or could assemble a Rubik\'s cube in a couple of minutes — most likely,
+        you are a born mind fitness trainer.
+        \n\n To find out what mental gymnastics is and how neurophysiology affects our skills, come to the free lesson
+        \"Profession of the future: how to train the brain and make money on it\" on November 7. You:
+        \n🔹Understand how your brain works and learn how to train it.
+        \n🔹You will be able to help the brain cope with difficulties better and solve problems more efficiently.
+        \n🔹Learn how to train others and earn money from it.
+        \n→ https://netology.ru/</string>
+    <string name="count_likes" translatable="false">159</string>
+    <string name="count_share" translatable="false">19</string>
+    <string name="count_view" translatable="false">19</string>
+    <string name="description_button_favorite" translatable="false">Favorite</string>
+    <string name="description_button_share" translatable="false">Share</string>
+    <string name="description_button_view" translatable="false">Views</string>
 </resources>
