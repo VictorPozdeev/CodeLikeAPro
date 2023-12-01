@@ -5,8 +5,7 @@ import android.os.Bundle
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.viewModel.PostViewModel
 import androidx.activity.viewModels
-import ru.netology.nmedia.dto.correctDisplayOfNumbers
-
+import ru.netology.nmedia.adapter.PostAdapter
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,31 +16,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         val viewModel by viewModels<PostViewModel>()
-        viewModel.data.observe(this) { post ->
-            with(binding) {
-                author.text = post.author
-                date.text = post.published
-                content.text = post.content
+        val adapter = PostAdapter({ viewModel.likeById(it.id) },
+            { viewModel.shareById(it.id) })
+        binding.list.adapter = adapter
 
-                ibFavorite.setImageResource(
-                    if(post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
-                )
-
-                numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
-                numberOfShare.text = correctDisplayOfNumbers(post.countShare)
-                numberOfViews.text = correctDisplayOfNumbers(post.counterView)
-
-            }
-        }
-
-        binding.ibFavorite.setOnClickListener {
-            viewModel.like()
-        }
-
-        binding.ibShare.setOnClickListener {
-            viewModel.share()
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
         }
     }
-
-
 }
