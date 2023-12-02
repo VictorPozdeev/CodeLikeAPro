@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostCardBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.correctDisplayOfNumbers
 
 typealias OnLikeListener = (post: Post) -> Unit
 typealias OnShareListener = (post: Post) -> Unit
@@ -49,6 +50,10 @@ class PostViewHolder(
             ibShare.setOnClickListener {
                 onShareListener(post)
             }
+
+            numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
+            numberOfShare.text = correctDisplayOfNumbers(post.countShare)
+            numberOfViews.text = correctDisplayOfNumbers(post.counterView)
         }
     }
 
