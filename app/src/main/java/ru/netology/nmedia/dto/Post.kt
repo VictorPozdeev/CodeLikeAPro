@@ -7,7 +7,7 @@ data class Post(
     val author: String,
     val content: String,
     val published: String,
-    val likedByMe: Boolean = false,
+    val likedByMe: Boolean,
     val countLiked: Int,
     val countShare: Int,
     val counterView: Int
@@ -37,9 +37,9 @@ data class Post(
     }
 }
 
-internal fun truncateText(text: String, maxLength: Int): String {
-    if (text.length <= maxLength) return text
-    return text.substring(0, maxLength) + "..."
+internal fun truncateText(text: String): String {
+    if (text.length <= 30) return text
+    return text.substring(0, 30) + "..."
 }
 
 

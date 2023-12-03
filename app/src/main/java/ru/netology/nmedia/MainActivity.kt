@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.truncateText
 import ru.netology.nmedia.util.AndroidUtils
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 binding.etContent.requestFocus()
                 binding.wgEditCancel.visibility = View.VISIBLE
                 AndroidUtils.showTheKeyboardNow(binding.etContent)
+                binding.tvPostText.text = truncateText(it.content)
             }
         }
 
