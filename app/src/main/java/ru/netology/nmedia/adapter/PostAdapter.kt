@@ -75,6 +75,10 @@ class PostViewHolder(
                     }
                 }.show()
             }
+
+            numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
+            numberOfShare.text = correctDisplayOfNumbers(post.countShare)
+            numberOfViews.text = correctDisplayOfNumbers(post.counterView)
         }
     }
 }
