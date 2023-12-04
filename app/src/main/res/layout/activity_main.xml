@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +9,110 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/post_card"
+        app:layout_constraintBottom_toTopOf="@id/bTools"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/post_card" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/bTools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="ibSave, etContent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/bEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="ivEdit" />
+
+    <View
+        android:id="@+id/vBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/edit_zone"
+        app:layout_constraintBottom_toTopOf="@id/etContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bEdit" />
+
+    <ImageView
+        android:id="@+id/ivEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:padding="@dimen/common_spacing"
-        />
-</FrameLayout>
+        android:src="@drawable/baseline_edit_pencil_24"
+        app:layout_constraintBottom_toTopOf="@id/etContent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bEdit"
+        android:contentDescription="@string/description_edit" />
+
+    <TextView
+        android:id="@+id/tvEditMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_message_text"
+        android:textColor="@color/project_blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tvPostText"
+        app:layout_constraintStart_toEndOf="@id/ivEdit"
+        app:layout_constraintTop_toTopOf="@id/ivEdit" />
+
+    <TextView
+        android:id="@+id/tvPostText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edited_text"
+        app:layout_constraintBottom_toTopOf="@id/etContent"
+        app:layout_constraintStart_toEndOf="@id/ivEdit"
+        app:layout_constraintTop_toBottomOf="@id/tvEditMessage" />
+
+    <ImageButton
+        android:id="@+id/ibCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/common_spacing"
+        android:src="@drawable/baseline_cancel_24"
+        app:layout_constraintBottom_toTopOf="@id/etContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bEdit"
+        android:contentDescription="@string/description_cancel_edit" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/wgEditCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="ivEdit,tvEditMessage,tvPostText,ibCancel,vBackground,bEdit" />
+
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_text"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/common_spacing"
+        android:background="@android:color/transparent"
+        android:maxLines="6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibSave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:autofillHints="false"
+        android:importantForAutofill="no"/>
+
+    <ImageButton
+        android:id="@+id/ibSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_save_24"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/etContent"
+        app:layout_constraintTop_toTopOf="@id/bTools"
+        android:contentDescription="@string/description_save_edit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

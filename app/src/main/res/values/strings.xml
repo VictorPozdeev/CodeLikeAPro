@@ -5,6 +5,7 @@
     <string name="author_title">Netology. University of Internet Professions</string>
     <string name="author_title_date">November 4 at 18:36</string>
     <string name="description_button_menu" translatable="false">Menu</string>
+    <string name="description_cancel_edit" translatable="false">Cancel edit</string>
     <string name="text_content">💡 If you were the best at solving puzzles with an asterisk as a child,
         won a speed reading contest, or could assemble a Rubik\'s cube in a couple of minutes — most likely,
         you are a born mind fitness trainer.
@@ -17,7 +18,17 @@
     <string name="count_likes" translatable="false">159</string>
     <string name="count_share" translatable="false">19</string>
     <string name="count_view" translatable="false">19</string>
+
     <string name="description_button_favorite" translatable="false">Favorite</string>
     <string name="description_button_share" translatable="false">Share</string>
     <string name="description_button_view" translatable="false">Views</string>
+    <string name="description_edit" translatable="false">Edit</string>
+    <string name="description_save_edit" translatable="false">Save edit</string>
+
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="post_text">Enter text...</string>
+    <string name="edit_message_text">Edit the text</string>
+    <string name="edited_text">Example</string>
+    <string name="content_must_not_be_empty">It is not possible to add empty text</string>
 </resources>

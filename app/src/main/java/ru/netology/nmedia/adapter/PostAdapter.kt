@@ -2,6 +2,7 @@ package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,17 +11,20 @@ import ru.netology.nmedia.databinding.PostCardBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.correctDisplayOfNumbers
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
+interface OnInteractionListener {
+    fun like(post: Post)
+    fun remove(post: Post)
+    fun edit(post: Post)
+    fun share(post: Post)
+}
 
 class PostAdapter(
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener,
+    private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = PostCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(view, onLikeListener, onShareListener)
+        return PostViewHolder(view, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -31,8 +35,7 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    val onLikeListener: OnLikeListener,
-    val onShareListener: OnShareListener
+    private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
@@ -44,11 +47,33 @@ class PostViewHolder(
             )
 
             ibFavorite.setOnClickListener {
-                onLikeListener(post)
+                onInteractionListener.like(post)
             }
 
             ibShare.setOnClickListener {
-                onShareListener(post)
+                onInteractionListener.share(post)
+            }
+            numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
+            numberOfShare.text = correctDisplayOfNumbers(post.countShare)
+            numberOfViews.text = correctDisplayOfNumbers(post.counterView)
+
+            ibMenu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.menu_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onInteractionListener.remove(post)
+                                true
+                            }
+                            R.id.edit -> {
+                                onInteractionListener.edit(post)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }.show()
             }
 
             numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
@@ -56,7 +81,6 @@ class PostViewHolder(
             numberOfViews.text = correctDisplayOfNumbers(post.counterView)
         }
     }
-
 }
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
