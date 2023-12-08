@@ -25,7 +25,7 @@
         android:maxLines="1"
         android:text="@string/author_title"
         app:layout_constraintBottom_toTopOf="@+id/date"
-        app:layout_constraintEnd_toStartOf="@+id/ibMenu"
+        app:layout_constraintEnd_toStartOf="@+id/bMenu"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
         app:layout_constraintTop_toTopOf="@+id/ivLogo" />
 
@@ -38,27 +38,30 @@
         android:maxLines="1"
         android:text="@string/author_title_date"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
-        app:layout_constraintEnd_toStartOf="@+id/ibMenu"
+        app:layout_constraintEnd_toStartOf="@+id/bMenu"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
         app:layout_constraintTop_toBottomOf="@+id/author" />
 
-    <ImageButton
-        android:id="@+id/ibMenu"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
+    <Button
+        android:id="@+id/bMenu"
+        style="@style/StyleMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_button_menu"
+        app:icon="@drawable/baseline_more_vert_24"
+        app:iconSize="@dimen/button_size"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivLogo"
-        app:srcCompat="@drawable/baseline_more_vert_24" />
+        app:tint="@color/menu_tint" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="ivLogo, date, ibMenu" />
+        app:constraint_referenced_ids="ivLogo, date, bMenu" />
 
     <TextView
         android:id="@+id/content"
@@ -79,68 +82,63 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content" />
 
-    <ImageButton
-        android:id="@+id/ibFavorite"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbFavorite"
+        style="@style/StyleLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:checkable="true"
         android:contentDescription="@string/description_button_favorite"
+        android:text="@string/count_likes"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/count_color"
+        android:textSize="@dimen/text_size"
+        app:icon="@drawable/ic_like"
+        app:iconSize="@dimen/button_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_content"
         app:srcCompat="@drawable/baseline_favorite_border_24" />
 
-    <TextView
-        android:id="@+id/numberOfLikes"
-        android:layout_width="@dimen/distance_for_counters"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbShare"
+        style="@style/StyleShare"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/count_likes"
-        android:maxLines="1"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/ibFavorite"
-        app:layout_constraintStart_toEndOf="@id/ibFavorite"
-        app:layout_constraintTop_toBottomOf="@id/barrier_content" />
-
-    <ImageButton
-        android:id="@+id/ibShare"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
         android:background="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@id/numberOfLikes"
-        app:layout_constraintTop_toBottomOf="@id/barrier_content"
-        app:srcCompat="@drawable/baseline_share_24"
-        android:contentDescription="@string/description_button_share" />
-
-    <TextView
-        android:id="@+id/numberOfShare"
-        android:layout_width="@dimen/distance_for_counters"
-        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_button_share"
         android:text="@string/count_share"
-        android:maxLines="1"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/ibFavorite"
-        app:layout_constraintStart_toEndOf="@id/ibShare"
-        app:layout_constraintTop_toBottomOf="@id/barrier_content" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/share_tint"
+        android:textSize="16sp"
+        app:icon="@drawable/baseline_share_24"
+        app:iconSize="24dp"
+        app:layout_constraintStart_toEndOf="@id/mbFavorite"
+        app:layout_constraintTop_toBottomOf="@id/barrier_content"
+        app:tint="@color/share_tint" />
 
     <TextView
         android:id="@+id/numberOfViews"
         android:layout_width="@dimen/distance_for_counters"
         android:layout_height="wrap_content"
-        android:text="@string/count_view"
-        android:maxLines="1"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/ibFavorite"
+        android:maxLines="1"
+        android:text="@string/count_view"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/count_color"
+        app:layout_constraintBottom_toBottomOf="@id/mbFavorite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_content" />
 
     <ImageButton
         android:id="@+id/ibView"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/description_button_view"
         app:layout_constraintEnd_toStartOf="@id/numberOfViews"
         app:layout_constraintTop_toBottomOf="@id/barrier_content"
-        app:srcCompat="@drawable/baseline_visibility_24"
-        android:contentDescription="@string/description_button_view" />
+        app:srcCompat="@drawable/baseline_visibility_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
