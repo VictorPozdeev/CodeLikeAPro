@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.CodeLikeAPro" parent="Base.Theme.CodeLikeAPro" />
+
+    <style name="StyleLike" parent="Widget.Material3.Button.TextButton">
+        <item name="iconTint">@color/like_tint</item>
+    </style>
+
+    <style name="StyleShare" parent="Widget.Material3.Button.TextButton">
+        <item name="iconTint">@color/share_tint</item>
+    </style>
+
+    <style name="StyleMenu" parent="Widget.Material3.Button.IconButton.Outlined">
+        <item name="iconTint">@color/menu_tint</item>
+    </style>
 </resources>

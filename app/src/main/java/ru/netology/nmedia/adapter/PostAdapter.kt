@@ -42,22 +42,19 @@ class PostViewHolder(
             author.text = post.author
             date.text = post.published
             content.text = post.content
-            ibFavorite.setImageResource(
-                if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
-            )
 
-            ibFavorite.setOnClickListener {
+            mbFavorite.setOnClickListener {
                 onInteractionListener.like(post)
             }
 
-            ibShare.setOnClickListener {
+            mbShare.setOnClickListener {
                 onInteractionListener.share(post)
             }
-            numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
-            numberOfShare.text = correctDisplayOfNumbers(post.countShare)
+            mbFavorite.text = correctDisplayOfNumbers(post.countLiked)
+            mbShare.text = correctDisplayOfNumbers(post.countShare)
             numberOfViews.text = correctDisplayOfNumbers(post.counterView)
 
-            ibMenu.setOnClickListener {
+            bMenu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.menu_post)
                     setOnMenuItemClickListener { item ->
@@ -75,9 +72,9 @@ class PostViewHolder(
                     }
                 }.show()
             }
-
-            numberOfLikes.text = correctDisplayOfNumbers(post.countLiked)
-            numberOfShare.text = correctDisplayOfNumbers(post.countShare)
+            mbFavorite.isChecked = post.likedByMe
+            mbFavorite.text = correctDisplayOfNumbers(post.countLiked)
+            mbShare.text = correctDisplayOfNumbers(post.countShare)
             numberOfViews.text = correctDisplayOfNumbers(post.counterView)
         }
     }
