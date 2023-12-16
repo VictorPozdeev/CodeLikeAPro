@@ -1,6 +1,7 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +17,7 @@ interface OnInteractionListener {
     fun remove(post: Post)
     fun edit(post: Post)
     fun share(post: Post)
+    fun watch(post: Post)
 }
 
 class PostAdapter(
@@ -50,6 +52,17 @@ class PostViewHolder(
             mbShare.setOnClickListener {
                 onInteractionListener.share(post)
             }
+
+            videoView.setOnClickListener {
+                onInteractionListener.watch(post)
+            }
+
+            if (post.videoUrl != null) {
+                postVideoGroup.visibility = View.VISIBLE
+            } else {
+                postVideoGroup.visibility = View.GONE
+            }
+
             mbFavorite.text = correctDisplayOfNumbers(post.countLiked)
             mbShare.text = correctDisplayOfNumbers(post.countShare)
             numberOfViews.text = correctDisplayOfNumbers(post.counterView)
@@ -63,10 +76,12 @@ class PostViewHolder(
                                 onInteractionListener.remove(post)
                                 true
                             }
+
                             R.id.edit -> {
                                 onInteractionListener.edit(post)
                                 true
                             }
+
                             else -> false
                         }
                     }
@@ -79,6 +94,7 @@ class PostViewHolder(
         }
     }
 }
+
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id

@@ -21,7 +21,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             countLiked = 999,
             countShare = 1_099,
-            counterView = 400_099_999
+            counterView = 400_099_999,
+            videoUrl = null
         ),
         Post(
             id = nextId++,
@@ -38,7 +39,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = true,
             countLiked = 999,
             countShare = 1_099,
-            counterView = 400_099_999
+            counterView = 400_099_999,
+            videoUrl = "https://rutube.ru/video/c7ee6f719a0256843d298a912d7dbb5d/"
         )
     )
     private val data = MutableLiveData(posts)

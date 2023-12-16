@@ -10,7 +10,8 @@ data class Post(
     val likedByMe: Boolean,
     val countLiked: Int,
     val countShare: Int,
-    val counterView: Int
+    val counterView: Int,
+    val videoUrl: String?
 )
 
  internal fun correctDisplayOfNumbers(num: Int): String {
