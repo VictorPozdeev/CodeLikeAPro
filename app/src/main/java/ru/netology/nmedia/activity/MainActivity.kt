@@ -27,15 +27,17 @@ class MainActivity : AppCompatActivity() {
             result ?: return@registerForActivityResult
             viewModel.changeContent(result)
             viewModel.save()
-
         }
 
         val editPostContract = registerForActivityResult(EditPostActivity.ContractEdit) { result ->
-            result ?: return@registerForActivityResult
+            if (result == null) {
+                viewModel.resetEditingState()
+                return@registerForActivityResult
+            }
             viewModel.changeContent(result)
             viewModel.save()
-
         }
+
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun like(post: Post) {
                 viewModel.likeById(post.id)
@@ -55,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 val startIntent = Intent.createChooser(intentText, getString(R.string.share))
                 startActivity(startIntent)
-
             }
 
             override fun remove(post: Post) {
@@ -65,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             override fun edit(post: Post) {
                 viewModel.edit(post)
                 editPostContract.launch(post.content)
-
             }
         }
         )
