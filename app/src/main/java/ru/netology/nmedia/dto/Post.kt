@@ -14,7 +14,7 @@ data class Post(
     val videoUrl: String?
 )
 
- internal fun correctDisplayOfNumbers(num: Int): String {
+ fun correctDisplayOfNumbers(num: Int): String {
     return when (num) {
         in 0..999 -> num.toString()
         in 1_000..9_999 -> if (num % 1_000 == 0) {
@@ -33,7 +33,6 @@ data class Post(
         } else {
             "${floor(num / 100_000.0) / 10.0}M"
         }
-
         else -> "0"
     }
 }
