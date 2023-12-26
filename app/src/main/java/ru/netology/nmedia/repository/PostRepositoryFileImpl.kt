@@ -16,13 +16,18 @@ class PostRepositoryFileImpl(
     private val filename = "posts.json"
     private var nextId = 1L
     private var posts = emptyList<Post>()
+        set(value) {
+            field = value
+            sync()
+        }
     private var data = MutableLiveData(posts)
 
     init {
         val file = context.filesDir.resolve(filename)
         if (file.exists()) {
-            context.openFileInput(filename).bufferedReader().use {
-                posts = gson.fromJson(it, type)
+            context.openFileInput(filename).bufferedReader().use { bufferedReader ->
+                posts = gson.fromJson(bufferedReader, type)
+                nextId = posts.maxOfOrNull { it.id } ?: 1L
                 data.value = posts
             }
         } else {
