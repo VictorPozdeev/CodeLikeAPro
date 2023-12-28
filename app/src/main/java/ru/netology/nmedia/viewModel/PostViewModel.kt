@@ -1,11 +1,15 @@
 package ru.netology.nmedia.viewModel
 
+import android.app.Application
 import android.app.assist.AssistContent
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
+import ru.netology.nmedia.repository.PostRepositoryFileImpl
 import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
+import ru.netology.nmedia.repository.PostRepositorySharePrefsImpl
 
 private val empty = Post(
     id = 0,
@@ -16,11 +20,11 @@ private val empty = Post(
     countLiked = 0,
     countShare = 0,
     counterView = 0,
-    videoUrl = null
+    videoUrl = "https://rutube.ru/video/c7ee6f719a0256843d298a912d7dbb5d/"
 )
 
-class PostViewModel : ViewModel() {
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+class PostViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: PostRepository = PostRepositoryFileImpl(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
     fun likeById(id: Long) = repository.likeById(id)
