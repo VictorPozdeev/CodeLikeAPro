@@ -18,6 +18,7 @@ interface OnInteractionListener {
     fun edit(post: Post)
     fun share(post: Post)
     fun watch(post: Post)
+    fun watchPost(post: Post)
 }
 
 class PostAdapter(
@@ -66,6 +67,10 @@ class PostViewHolder(
             mbFavorite.text = correctDisplayOfNumbers(post.countLiked)
             mbShare.text = correctDisplayOfNumbers(post.countShare)
             numberOfViews.text = correctDisplayOfNumbers(post.counterView)
+
+            root.setOnClickListener {
+                onInteractionListener.watchPost(post)
+            }
 
             bMenu.setOnClickListener {
                 PopupMenu(it.context, it).apply {

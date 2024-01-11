@@ -2,41 +2,32 @@ package ru.netology.nmedia.activity
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.launch
-import androidx.activity.viewModels
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
 
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+class FeedFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        val viewModel: PostViewModel by viewModels()
-        val newPostContract = registerForActivityResult(NewPostActivity.Contract) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
-        }
+        val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
-        val editPostContract = registerForActivityResult(EditPostActivity.ContractEdit) { result ->
-            if (result == null) {
-                viewModel.resetEditingState()
-                return@registerForActivityResult
-            }
-            viewModel.changeContent(result)
-            viewModel.save()
-        }
+        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun like(post: Post) {
@@ -46,6 +37,15 @@ class MainActivity : AppCompatActivity() {
             override fun watch(post: Post) {
                 val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
                 startActivity(intentVideo)
+            }
+
+            override fun watchPost(post: Post) {
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_postFragment,
+                    Bundle().apply {
+                        putLong("id", post.id)
+                    }
+                )
             }
 
             override fun share(post: Post) {
@@ -65,19 +65,25 @@ class MainActivity : AppCompatActivity() {
 
             override fun edit(post: Post) {
                 viewModel.edit(post)
-                editPostContract.launch(post.content)
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply {
+                        textArg = post.content
+                    }
+                )
             }
         }
         )
 
         binding.addPostButton.setOnClickListener {
-            newPostContract.launch()
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
-        viewModel.data.observe(this) { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
 
         binding.list.adapter = adapter
+        return binding.root
     }
 }
