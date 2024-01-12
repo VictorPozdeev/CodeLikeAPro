@@ -25,6 +25,7 @@ class NewPostFragment : Fragment() {
 
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
+        binding.content.requestFocus()
         binding.OkButton.setOnClickListener {
             val text = binding.content.text.toString()
             if (text.isNotBlank()) {

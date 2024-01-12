@@ -25,10 +25,10 @@ class PostFragment : Fragment() {
     ): View {
 
         val binding = FragmentPostBinding.inflate(layoutInflater, container, false)
-        val postId = arguments?.getLong("id")
+
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
-        val holder = PostViewHolder(binding.postWatch, object : OnInteractionListener {
+        val listener = object : OnInteractionListener {
             override fun like(post: Post) {
                 viewModel.likeById(post.id)
             }
@@ -45,7 +45,7 @@ class PostFragment : Fragment() {
             }
 
             override fun remove(post: Post) {
-                viewModel.removeById(postId!!)
+                viewModel.removeById(post.id)
                 findNavController().navigateUp()
             }
 
@@ -66,10 +66,15 @@ class PostFragment : Fragment() {
 
             override fun watchPost(post: Post) {}
         }
-        )
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val post = posts.find { it.id == postId }
-            holder.bind(post!!)
+
+        val currentPostId = requireArguments().textArg!!.toLong()
+
+        binding.postWatch.apply {
+            viewModel.data.observe(viewLifecycleOwner) { it ->
+                val viewHolder = PostViewHolder(binding.postWatch, listener)
+                val post = it.find { it.id == currentPostId }
+                post?.let { viewHolder.bind(post) }
+            }
         }
         return binding.root
     }
