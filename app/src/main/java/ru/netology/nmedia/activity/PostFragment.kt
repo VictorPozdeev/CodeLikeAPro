@@ -67,7 +67,7 @@ class PostFragment : Fragment() {
             override fun watchPost(post: Post) {}
         }
 
-        val currentPostId = requireArguments().textArg!!.toLong()
+        val currentPostId = requireArguments().textArg?.toLong()?: return binding.root
 
         binding.postWatch.apply {
             viewModel.data.observe(viewLifecycleOwner) { it ->
